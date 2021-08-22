@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MdCancel} from "react-icons/md";
+
 // Icons
 import { IoMdClose as CancelIcon } from 'react-icons/io';
 // Components
@@ -30,8 +32,11 @@ class Form extends Component {
     this.controlRef = React.createRef();
 
     // TODO: Define your state properties here
-    this.state = {}
-
+    this.state = {
+      input:""
+    }
+    this.handleOnChangeText = this.handleOnChangeText.bind(this)
+    this.handleOnSubmit = this.handleOnSubmit.bind(this)
     // TODO: Bind your class methods here
     // ...
   }
@@ -39,25 +44,38 @@ class Form extends Component {
   // TODO: implement the componentDidMount lifecycle method to set focus on the form control element.
   // Tips:
   // - Call the `focus` method on the control ref node `this.controlRef.current`
-  componentDidMount() {}
+  componentDidMount() {
+    // this.controlRef.current.focus();
+  }
 
   // TODO: implement the handleOnChangeText event handler.
   // Tips:
   // - Use the `this.setState` method to update the text value of the control from
-  handleOnChangeText(event) {}
+  handleOnChangeText (event){
+    const{value} = event.target;
+    this.setState({input : value})
+
+  }
 
   // TODO: implement the handleOnSubmit event handler.
   // Tips:
   // - Use the `preventDefault` method to prevent the default action
   // - Call the `this.props.onClickSubmit` method to submit the text
   // - Clean up the control form value using `this.setState`
-  handleOnSubmit(event) {}
+  handleOnSubmit(event) {
+    event.preventDefault()
+    this.props.onClickSubmit()
+    this.setState(this.state.input="")
+  }
 
   // TODO: implement the handleOnKeyDown event handler.
   // Tips:
   // - Use the `key` attribute from the event to check if the user has pressed "Enter" on the keyboard
   // - Call the `this.handleOnSubmit` if the user pressed "Enter"
-  handleOnKeyDown(event) {}
+  handleOnKeyDown(event) {
+    const {key} = event.target
+    if (key === "Enter") this.handleOnSubmit()
+  }
 
   // TODO: render the Form UI.
   render() {
@@ -66,10 +84,10 @@ class Form extends Component {
         ref={this.formRef}
         className={`form form-${this.props.type}`}
       >
-        { /* render form control: input or textarea */ } 
+       <input type="text" value={this.state.input} name="input" onChange={this.handleOnChangeText} className="form-textarea"/>
         <div className="form-actions">
-          { /* render submit button */ }
-          { /* render cancel icon */ }
+         <input className="form-input" type="submit"/>
+        <Button icon={<CancelIcon />}/>
         </div>
       </form>
     );

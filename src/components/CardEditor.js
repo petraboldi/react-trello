@@ -52,10 +52,14 @@ class CardEditor extends Component {
           }}
         >
           <div>
-            { /* render editor form */ }
+           <Form />
           </div>
           <ul className="editor-actions">
-            { /* render editor actions */ }
+            < Tag /> 
+           <Button />
+           <Button />
+           <Button /> 
+
             { /* render tags editing form */ }
           </ul>
         </div>

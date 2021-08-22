@@ -23,7 +23,8 @@ import Popover from './Popover';
  */ 
 const Menu = (props) => (
   <div className="menu">
-    { /* render the menu icon */ }
+  < MenuIcon />
+  {/* <Popover></Popover> */}
     { /* render the lists of actions */ }
   </div>
 );

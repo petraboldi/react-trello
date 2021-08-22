@@ -185,9 +185,11 @@ class CardsList extends Component {
     return (
       <div className="cards-list">
         { /* render list header */ }
-        { /* render cards */ }
+        < Card /> 
+        <Form />
         { /* render list footer */ }
-        { /* render card editor */ }
+        < Menu /> 
+     {/* < CardEditor /> */}
       </div>
     );
   }

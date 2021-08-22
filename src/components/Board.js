@@ -166,6 +166,8 @@ class Board extends Component {
   render() {
     return (
       <div className="board">
+        < CardsList />
+        {/* < Form />  */}
         { /* render the lists */ }
         { /* render the list creation form */ }
       </div>
