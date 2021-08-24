@@ -14,12 +14,17 @@ import PropTypes from "prop-types";
  * - You can use the 'tag' CSS class for styling
  *
  */
-const Tag = ({ text = null }) => {
-  return (
-    <>
-      <span className="tag"><p>{text}</p></span>
-    </>
-  );
+const Tag = ({ text }) => {
+  if (text) {
+    return (
+      <>
+        <span className="tag">
+          <p>{text}</p>
+        </span>
+      </>
+    );
+  }
+  return null;
 };
 
 Tag.propTypes = {

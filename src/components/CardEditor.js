@@ -56,11 +56,13 @@ class CardEditor extends Component {
           </div>
           <ul className="editor-actions">
             < Tag /> 
-           <Button />
-           <Button />
-           <Button /> 
+           <Button icon={CopyIcon}/>
+           <Button icon={RemoveIcon}/>
+           <Button icon={EditIcon}/> 
+           < Button icon={ArchiveIcon}/> 
 
             { /* render tags editing form */ }
+            <Popover/>
           </ul>
         </div>
       </div>

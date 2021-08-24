@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MdCancel} from "react-icons/md";
 
 // Icons
 import { IoMdClose as CancelIcon } from 'react-icons/io';
@@ -86,8 +85,8 @@ class Form extends Component {
       >
        <input type="text" value={this.state.input} name="input" onChange={this.handleOnChangeText} className="form-textarea"/>
         <div className="form-actions">
-         <input className="form-input" type="submit"/>
-        <Button icon={<CancelIcon />}/>
+        <Button text={this.props.buttonText}/> 
+        <CancelIcon />
         </div>
       </form>
     );

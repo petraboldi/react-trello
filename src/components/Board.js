@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { _getNextNumber, _generateId } from '../utils';
+import React, { Component } from "react";
+import { _getNextNumber, _generateId } from "../utils";
 // Icons
-import { IoMdAdd as AddIcon } from 'react-icons/io';
+import { IoMdAdd as AddIcon } from "react-icons/io";
 // Components
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import CardsList from './CardsList';
-import Form from './Form';
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import CardsList from "./CardsList";
+import Form from "./Form";
 
-import data from '../data';
+import data from "../data";
 
 class Board extends Component {
   constructor(props) {
@@ -18,19 +18,37 @@ class Board extends Component {
       lists: {},
       cards: {},
       listOrder: [],
-      newListText: '',
+      newListText: "",
       creatingNewList: false,
       openMenuId: null,
     };
 
     // TODO: Bind your class methods here
     // ...
+    this.handleAddList = this.handleAddList.bind(this);
+    this.handleRemoveList = this.handleRemoveList.bind(this);
+    this.handleAddCard = this.handleAddCard.bind(this);
+    this.handleRemoveCard = this.handleRemoveList.bind(this);
+    this.handleRemoveAllCards = this.handleRemoveAllCards.bind(this);
+
+    this.handleCopyCard = this.handleCopyCard.bind(this);
+    this.handleCopyList = this.handleCopyList.bind(this);
+    this.handleMoveAllCards = this.handleMoveAllCards.bind(this);
+    this.handleToggleMenu = this.handleToggleMenu.bind(this);
+    this.handleEditCard = this.handleEditCard.bind(this);
+    this.handleRemoveTag = this.handleRemoveTag.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
   }
 
   // TODO: implement the componentDidMount lifecycle method to fetch data and init the component state.
   // Tips:
   // - Use the `this.setState` method to update the component state
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ lists: data.lists });
+    this.setState({ listOrder: data.listOrder });
+    this.setState({ cards: data.cards });
+  }
 
   // TODO: implement the handleAddList method to add a new list to the board.
   // Tips:
@@ -39,7 +57,7 @@ class Board extends Component {
   // - Add the new list
   // - Use the `this.setState` method to update the state (lists, listOrder, newListText, creatingNewList)
   // - Reset the `newListText` and `creatingNewList` state values as well to cleanup and close the form
-  handleAddList(title = '') {}
+  handleAddList(title = "") {}
 
   // TODO: implement the handleRemoveList method to remove a list from the board.
   // Tips:
@@ -55,7 +73,7 @@ class Board extends Component {
   // - Use the `_getNextNumber` function to get the new card number
   // - Add the new card
   // - Use the `this.setState` method to update the state (lists, cards)
-  handleAddCard(listId, description = '') {}
+  handleAddCard(listId, description = "") {}
 
   // TODO: implement the handleRemoveCard method to remove a card from a list.
   // Tips:
@@ -109,7 +127,7 @@ class Board extends Component {
   // TODO: implement the handleEditCard method to update the card description.
   // Tips:
   // - Use the `this.setState` method to update the state (cards)
-  handleEditCard(cardId, description = '') {}
+  handleEditCard(cardId, description = "") {}
 
   // TODO: implement the handleRemoveTag method to remove a tag from a card.
   // Tips:
@@ -119,7 +137,7 @@ class Board extends Component {
   // TODO: implement the handleAddTag method to add a tag to a card.
   // Tips:
   // - Use the `this.setState` method to update the state (cards)
-  handleAddTag(cardId, text = '') {}
+  handleAddTag(cardId, text = "") {}
 
   // [BONUS]: implement the handleDragEnd method to persist list and card reordering
   // Tips:
@@ -144,11 +162,36 @@ class Board extends Component {
   // - Add the children function that returns your board lists component and bind everything together
   // --> https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#children-function
   renderLists() {
-    return (
-      <div className="board-lists">
-        { /* render the lists */ }
-      </div>
-    );
+    const lists = this.state.listOrder.map((listOrder, index) => (
+      <CardsList
+        id={listOrder}
+        cards={this.state.cards}
+        title={Object.entries(this.state.lists).map((list) =>
+          this.state.listOrder.map((listOrder) => {
+            if (list[0] === listOrder) {
+              return list[1].title;
+            }
+          })
+        )}
+        index={index}
+        isMenuOpen={this.state.openMenuId}
+        onToggleMenu={this.handleToggleMenu()}
+        onAddCard={this.handleAddCard()}
+        onRemoveCard={this.handleRemoveCard()}
+        onRemoveList={this.handleRemoveList()}
+        onRemoveAllCards={this.handleRemoveAllCards()}
+        onCopyList={this.handleCopyList()}
+        onMoveAllCards={this.handleMoveAllCards()}
+        onCopyCard={this.handleCopyCard()}
+        onEditCard={this.handleEditCard()}
+        onRemoveTag={this.handleRemoveTag()}
+        onAddTag={this.handleAddTag()}
+  
+      />
+    ));
+    console.log(lists);
+
+    return <div className="board-lists">{lists}</div>;
   }
 
   // TODO: implement the renderNewList method to render the list creation form.
@@ -164,15 +207,16 @@ class Board extends Component {
   // --> https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md
   // - Add the onDragEnd prop to the <DragDropContext> component
   render() {
+    console.log(Object.entries(this.state.lists).map(list=> list))
     return (
       <div className="board">
-        < CardsList />
-        {/* < Form />  */}
-        { /* render the lists */ }
-        { /* render the list creation form */ }
+        {/* render the lists */}
+        {this.renderLists()}
+        {/* render the list creation form */}
+        {/* // <Form type="editor" /> */}
       </div>
     );
   }
-};
+}
 
 export default Board;
